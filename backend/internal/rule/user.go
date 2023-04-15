@@ -6,7 +6,8 @@ import (
 )
 
 type UserService interface {
-	CreateUser(id uint, name, email string) (*entity.User, error)
+	CreateUser(name, email string) (*entity.User, error)
+	UpdateUser(id uint, name string) (*entity.User, error)
 }
 
 type userService struct {
@@ -19,6 +20,10 @@ func NewUserService(r repo.UserRepo) UserService {
 	}
 }
 
-func (s *userService) CreateUser(id uint, name, email string) (*entity.User, error) {
-	return &entity.User{}, nil
+func (s *userService) CreateUser(name, email string) (*entity.User, error) {
+	return s.repo.CreateUser(name, email)
+}
+
+func (s *userService) UpdateUser(id uint, name string) (*entity.User, error) {
+	return s.repo.UpdateUser(id, name)
 }

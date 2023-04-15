@@ -1,0 +1,15 @@
+# Use postgres/example user/hutils credentials
+version: '3.9'
+
+services:
+
+  db:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: cyber
+      POSTGRES_PASSWORD: manul
+      POSTGRES_DB: school
+      DATABASE_HOST: postgres
+    ports:
+      - 5432:5432

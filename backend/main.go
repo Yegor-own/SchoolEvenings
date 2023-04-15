@@ -1,5 +1,7 @@
 package main
 
-func main() {
+import "backend/internal/router"
 
+func main() {
+	router.Api()
 }
