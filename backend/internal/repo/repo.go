@@ -9,3 +9,7 @@ type userRepo struct {
 type courseRepo struct {
 	store *gorm.DB
 }
+
+type registryRepo struct {
+	store *gorm.DB
+}

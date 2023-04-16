@@ -8,12 +8,11 @@ type Course struct {
 	Description  string `json:"description"`
 	MaxListeners int    `json:"max_listeners"`
 	Archive      bool   `json:"archive"`
-	// Confirmation bool   `json:"confirmation"`
-	ExpiresOn time.Time
-	From      time.Time
-	To        time.Time
-	Timetable []time.Time
-	CreatedAt time.Time
+	ExpiresOn    time.Time
+	From         time.Time
+	To           time.Time
+	Timetable    []time.Time
+	CreatedAt    time.Time
 }
 
 func NewCourse(title, description string, maxListeners int, expiration, from, to time.Time, timetable []time.Time) *Course {

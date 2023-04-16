@@ -38,7 +38,7 @@ func CreateCourse(service rule.CourseService) fiber.Handler {
 			return ctx.JSON(presenter.BadResponse)
 		}
 
-		res, err := service.CreateCourse(params.Title, params.Description)
+		res, err := service.CreateCourse(params.Title, params.Description, params.MaxListeners, params.Expiration, params.From, params.To, params.Timetable)
 		if err != nil {
 			ctx.Status(http.StatusBadRequest)
 			return ctx.JSON(presenter.BadResponse)
