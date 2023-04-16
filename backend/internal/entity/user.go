@@ -1,13 +1,17 @@
 package entity
 
 type User struct {
-	ID    uint   `json:"id"`
-	Name  string `json:"name"`
-	Email string `json:"email"`
-	Admin bool   `json:"email"`
+	ID         uint   `json:"id"`
+	Name       string `json:"name"`
+	Surname    string
+	Patrynomic string
+	Email      string
+	Phone      int
+	Password   string
+	Admin      bool `json:"email"`
 }
 
-func NewUser(name, email string) *User {
+func NewUser(name, surname, email, password string) *User {
 	return &User{
 		Name:  name,
 		Email: email,

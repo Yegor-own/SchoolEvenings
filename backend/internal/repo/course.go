@@ -19,7 +19,7 @@ func NewCourseRepo(db *gorm.DB) CourseRepo {
 	}
 }
 
-func (r *courseRepo) CreateCourse(title, description string) (*entity.Course, error) {
+func (r *courseRepo) CreateCourse(title, description string, max) (*entity.Course, error) {
 	course := entity.NewCourse(title, description)
 	res := r.store.Create(course)
 
