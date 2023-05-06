@@ -5,7 +5,7 @@ import (
 )
 
 type UserService interface {
-	Register(name, surname, patronymic, email string, phone int, password string) (user entity.User, err error)
+	Register(name, surname, patronymic, email string, phone int, password string) (user *entity.User, err error)
 	Login(email, password string) (token string, err error)
 	ChangeData(data entity.User) (*entity.User, error)
 	Delete(id uint) error
@@ -26,7 +26,7 @@ func NewUserService(repo UserService) UserService {
 	}
 }
 
-func (s userService) Register(name, surname, patronymic, email string, phone int, password string) (user entity.User, err error) {
+func (s userService) Register(name, surname, patronymic, email string, phone int, password string) (user *entity.User, err error) {
 	return s.repo.Register(name, surname, patronymic, email, phone, password)
 }
 
