@@ -9,8 +9,8 @@ import (
 
 // CreateUser uses a pointer for user var and writes in it, if fails return err
 func (d SqlxDriver) CreateUser(user *entity.User) error {
-	//TODO make it more effectively ->
-	stmt := `INSERT INTO users (name, surname, patrosymic, email, phone, password, verified) VALUES (?, ?, ?, ?, ?, ?)`
+	//TODO make it more efficient ->
+	stmt := `INSERT INTO users (name, surname, patronymic, email, phone, password, verified) VALUES (?, ?, ?, ?, ?, ?)`
 	res, err := d.DB.Exec(stmt, user.Name, user.Surname, user.Patronymic, user.Email, user.Phone, user.Password)
 
 	if err != nil {

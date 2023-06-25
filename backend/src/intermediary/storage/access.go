@@ -14,6 +14,17 @@ type Access interface {
 	FetchCourseParams(params map[string]any) (*entity.Course, error)
 	UpdateCourse(id uint, params map[string]any) error
 	DeleteCourse(id uint) error
+
+	//registry operations
+	CreateEntry(registry *entity.Registry) error
+	FetchEntry(id uint) error
+	FetchEntryParams(params map[string]any) (*entity.Registry, error)
+	UpdateEntry(id uint, params map[string]any) error
+
+	//tag operations
+	CreateTag(tag *entity.Tag) error
+	// DeleteTag deletes relations between course and tag NOT TAG
+	DeleteTag(id uint) error
 }
 
 type accessDriver struct {
@@ -62,4 +73,29 @@ func (d accessDriver) UpdateCourse(id uint, params map[string]any) error {
 
 func (d accessDriver) DeleteCourse(id uint) error {
 	return d.storage.DeleteCourse(id)
+}
+
+func (d accessDriver) CreateEntry(registry *entity.Registry) error {
+	return d.storage.CreateEntry(registry)
+}
+
+func (d accessDriver) FetchEntry(id uint) error {
+	return d.storage.FetchEntry(id)
+}
+
+func (d accessDriver) FetchEntryParams(params map[string]any) (*entity.Registry, error) {
+	return d.storage.FetchEntryParams(params)
+}
+
+func (d accessDriver) UpdateEntry(id uint, params map[string]any) error {
+	return d.storage.UpdateEntry(id, params)
+}
+
+func (d accessDriver) CreateTag(tag *entity.Tag) error {
+	return d.storage.CreateTag(tag)
+}
+
+// DeleteTag deletes relations between course and tag NOT TAG
+func (d accessDriver) DeleteTag(id uint) error {
+	return d.storage.DeleteTag(id)
 }

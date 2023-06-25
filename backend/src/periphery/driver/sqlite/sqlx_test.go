@@ -6,15 +6,16 @@ import (
 )
 
 func TestNewSqlxDriver(t *testing.T) {
+	//Connecting to sqlite
 	var db *sqlx.DB
-	// exactly the same as the built-in
 	db, err := sqlx.Open("sqlite3", "../../database/backend.db")
 
 	if err != nil {
 		t.Error(err)
 	}
 
-	_, err = NewSqlxDriver(db, "scripts/course.sql")
+	//Declare new driver with scripts
+	_, err = NewSqlxDriver(db, "scripts/courses.sql", "scripts/users.sql")
 	if err != nil {
 		t.Error(err)
 	}
