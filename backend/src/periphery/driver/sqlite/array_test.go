@@ -1,7 +1,7 @@
 package sqlite
 
 import (
-	"backend/src/internal/entity"
+	"backend/src/domain/entity"
 	"fmt"
 	"github.com/google/uuid"
 	"github.com/jmoiron/sqlx"

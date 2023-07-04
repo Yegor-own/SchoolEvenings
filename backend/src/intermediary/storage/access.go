@@ -1,6 +1,6 @@
 package storage
 
-import "backend/src/internal/entity"
+import "backend/src/domain/entity"
 
 type Access interface {
 	CreateUser(user *entity.User) error
@@ -17,7 +17,7 @@ type Access interface {
 
 	//registry operations
 	CreateEntry(registry *entity.Registry) error
-	FetchEntry(id uint) error
+	FetchEntry(id uint) (*entity.Registry, error)
 	FetchEntryParams(params map[string]any) (*entity.Registry, error)
 	UpdateEntry(id uint, params map[string]any) error
 
@@ -79,7 +79,7 @@ func (d accessDriver) CreateEntry(registry *entity.Registry) error {
 	return d.storage.CreateEntry(registry)
 }
 
-func (d accessDriver) FetchEntry(id uint) error {
+func (d accessDriver) FetchEntry(id uint) (*entity.Registry, error) {
 	return d.storage.FetchEntry(id)
 }
 

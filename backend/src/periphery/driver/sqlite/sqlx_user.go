@@ -1,7 +1,7 @@
 package sqlite
 
 import (
-	"backend/src/internal/entity"
+	"backend/src/domain/entity"
 	"errors"
 	"github.com/jmoiron/sqlx"
 	_ "github.com/mattn/go-sqlite3"
@@ -10,7 +10,7 @@ import (
 // CreateUser uses a pointer for user var and writes in it, if fails return err
 func (d SqlxDriver) CreateUser(user *entity.User) error {
 	//TODO make it more efficient ->
-	stmt := `INSERT INTO users (name, surname, patronymic, email, phone, password, verified) VALUES (?, ?, ?, ?, ?, ?)`
+	stmt := `INSERT INTO users (name, surname, patronymic, email, phone, password) VALUES (?, ?, ?, ?, ?, ?)`
 	res, err := d.DB.Exec(stmt, user.Name, user.Surname, user.Patronymic, user.Email, user.Phone, user.Password)
 
 	if err != nil {
@@ -27,7 +27,7 @@ func (d SqlxDriver) CreateUser(user *entity.User) error {
 }
 
 func (d SqlxDriver) FetchUser(id uint) (*entity.User, error) {
-	row := d.DB.QueryRowx(`SELECT * FROM user WHERE id = ?`, int64(id))
+	row := d.DB.QueryRowx(`SELECT * FROM users WHERE id = ?`, int64(id))
 
 	user := entity.User{}
 	err := row.StructScan(&user)

@@ -1,8 +1,8 @@
 package repository
 
 import (
+	"backend/src/domain/entity"
 	"backend/src/intermediary/storage"
-	"backend/src/internal/entity"
 	"encoding/json"
 	"time"
 )

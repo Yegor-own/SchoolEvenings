@@ -1,8 +1,8 @@
 package repository
 
 import (
+	"backend/src/domain/entity"
 	"backend/src/intermediary/storage"
-	"backend/src/internal/entity"
 	"encoding/json"
 )
 
@@ -12,6 +12,10 @@ type UserRepository struct {
 
 func NewUserRepository(access storage.Access) *UserRepository {
 	return &UserRepository{Storage: access}
+}
+
+func (r UserRepository) Get(id uint) (*entity.User, error) {
+	return r.Storage.FetchUser(id)
 }
 
 func (r UserRepository) Register(name, surname, patronymic, email string, phone int, password string) (user *entity.User, err error) {
