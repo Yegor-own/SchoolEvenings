@@ -6,7 +6,9 @@ import (
 )
 
 type CourseService interface {
-	Create(title, description string, ageRange [2]uint, previewUUID string, maxListeners uint, timetable []time.Weekday, from, to, expiresAt time.Time) (*entity.Course, error)
+	GetAll() ([]entity.Course, error)
+	Get(id uint) (*entity.Course, error)
+	Create(title, description string, ageRange [2]uint, previewUUID string, maxListeners uint, timetable []time.Weekday, from, to, expiresAt time.Time, creatorID uint) (*entity.Course, error)
 	ChangeData(course entity.Course) (*entity.Course, error)
 	Delete(id uint) error
 	AddTag(courseID, tagID uint) error
@@ -23,8 +25,16 @@ func NewCourseService(repo CourseService) CourseService {
 	return &courseService{repo: repo}
 }
 
-func (s courseService) Create(title, description string, ageRange [2]uint, previewUUID string, maxListeners uint, timetable []time.Weekday, from, to, expiresAt time.Time) (*entity.Course, error) {
-	return s.repo.Create(title, description, ageRange, previewUUID, maxListeners, timetable, from, to, expiresAt)
+func (s courseService) GetAll() ([]entity.Course, error) {
+	return s.repo.GetAll()
+}
+
+func (s courseService) Get(id uint) (*entity.Course, error) {
+	return s.repo.Get(id)
+}
+
+func (s courseService) Create(title, description string, ageRange [2]uint, previewUUID string, maxListeners uint, timetable []time.Weekday, from, to, expiresAt time.Time, creatorID uint) (*entity.Course, error) {
+	return s.repo.Create(title, description, ageRange, previewUUID, maxListeners, timetable, from, to, expiresAt, creatorID)
 }
 
 func (s courseService) ChangeData(course entity.Course) (*entity.Course, error) {

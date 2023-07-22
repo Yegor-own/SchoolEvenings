@@ -3,7 +3,13 @@ package repository
 import (
 	"backend/src/domain/entity"
 	"backend/src/intermediary/storage"
+	"backend/src/periphery/hash"
 	"encoding/json"
+	"github.com/golang-jwt/jwt"
+	"github.com/joho/godotenv"
+	"log"
+	"os"
+	"time"
 )
 
 type UserRepository struct {
@@ -18,7 +24,19 @@ func (r UserRepository) Get(id uint) (*entity.User, error) {
 	return r.Storage.FetchUser(id)
 }
 
+func (r UserRepository) GetByEmail(email string) (*entity.User, error) {
+	params := make(map[string]any)
+	params["email"] = email
+	return r.Storage.FetchUserParams(params)
+}
+
 func (r UserRepository) Register(name, surname, patronymic, email string, phone int, password string) (user *entity.User, err error) {
+	// Hash password
+	password, err = hash.HashPassword(password)
+	if err != nil {
+		log.Println(err)
+	}
+
 	user = entity.NewUser(name, surname, patronymic, email, phone, password, false, false)
 	err = r.Storage.CreateUser(user)
 	if err != nil {
@@ -31,21 +49,39 @@ func (r UserRepository) Register(name, surname, patronymic, email string, phone 
 func (r UserRepository) Login(email, password string) (token string, err error) {
 	params := make(map[string]any)
 	params["email"] = email
-	//TODO encrypt password
-	params["password"] = password
 
 	user, err := r.Storage.FetchUserParams(params)
 	if err != nil {
 		return "", err
 	}
 
-	//TODO develop a JWT token generator
-	token = "aaa_token" + user.Email
+	// Compare password
+	if ok := hash.ComparePassword(password, user.Password); !ok {
+		return "", nil
+	}
+
+	// Get env salt
+	err = godotenv.Load(".env")
+	if err != nil {
+		return "", err
+	}
+	salt := []byte(os.Getenv("JWT"))
+
+	// Generate JWT token
+	t := jwt.New(jwt.SigningMethodHS256)
+	claims := t.Claims.(jwt.MapClaims)
+	claims["email"] = email
+	claims["exp"] = time.Now().Add(5 * time.Hour * 24).Unix()
+
+	token, err = t.SignedString(salt)
+	if err != nil {
+		return "", err
+	}
 
 	return token, nil
 }
 
-func (r UserRepository) ChangeData(data entity.User) (*entity.User, error) {
+func (r UserRepository) ChangeData(data entity.ChangeUserData) (*entity.User, error) {
 	var mapData map[string]any
 	m, err := json.Marshal(data)
 	if err != nil {

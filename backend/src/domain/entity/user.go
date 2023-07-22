@@ -12,6 +12,14 @@ type User struct {
 	Admin      bool   `json:"admin" :"admin"`
 }
 
+type ChangeUserData struct {
+	ID         uint   `json:"id" :"id"`
+	Name       string `json:"name" :"name"`
+	Surname    string `json:"surname" :"surname"`
+	Patronymic string `json:"patronymic" :"patronymic"`
+	Phone      int    `json:"phone" :"phone"`
+}
+
 // NewUser returns a linker from new user model with given params
 func NewUser(name, surname, patronymic, email string, phone int, password string, verified, admin bool) *User {
 	return &User{

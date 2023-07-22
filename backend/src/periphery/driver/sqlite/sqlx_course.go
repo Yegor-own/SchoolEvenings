@@ -77,7 +77,7 @@ func convertResponseToCourse(res *sqlx.Row) (*entity.Course, error) {
 }
 
 func (d SqlxDriver) CreateCourse(course *entity.Course) error {
-	stmt := `INSERT INTO courses (title, description, age_range, preview_uuid, max_listeners, timetable, "from", "to", expires_at) 
+	stmt := `INSERT INTO courses (title, description, age_range, preview_uuid, max_listeners, timetable, "from", "to", expires_at, creator_id) 
 	VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`
 
 	// Convert timetable to string
@@ -167,6 +167,31 @@ func (d SqlxDriver) FetchCourseParams(params map[string]any) (*entity.Course, er
 
 	// Handle query result to entity
 	return convertResponseToCourse(row)
+}
+
+func (d SqlxDriver) FetchAllCourses() ([]entity.Course, error) {
+	rows, err := d.DB.Queryx(`SELECT * FROM courses`)
+	if err != nil {
+		return nil, err
+	}
+
+	var courses []entity.Course
+	for rows.Next() {
+		var c entity.Course
+		err = rows.StructScan(&c)
+		if err != nil {
+			return nil, err
+		}
+
+		courses = append(courses, c)
+	}
+	// check the error from rows
+	err = rows.Err()
+	if err != nil {
+		return nil, err
+	}
+
+	return courses, nil
 }
 
 func (d SqlxDriver) UpdateCourse(id uint, params map[string]any) error {

@@ -10,5 +10,7 @@ CREATE TABLE IF NOT EXISTS courses (
     /* format -> integers separated by spaces like "0 2 6" - this is numbers of the week days */
     "from" DATETIME NOT NULL,
     "to" DATETIME NOT NULL,
-    expires_at DATETIME NOT NULL
+    expires_at DATETIME NOT NULL,
+    creator_id INTEGER NOT NULL,
+    FOREIGN KEY (creator_id) REFERENCES users (id)
 );

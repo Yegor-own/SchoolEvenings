@@ -6,9 +6,10 @@ import (
 
 type UserService interface {
 	Get(id uint) (*entity.User, error)
+	GetByEmail(email string) (*entity.User, error)
 	Register(name, surname, patronymic, email string, phone int, password string) (user *entity.User, err error)
 	Login(email, password string) (token string, err error)
-	ChangeData(data entity.User) (*entity.User, error)
+	ChangeData(data entity.ChangeUserData) (*entity.User, error)
 	Delete(id uint) error
 	Verify(id uint) error
 	Enroll(userID, courseID uint) error
@@ -31,6 +32,10 @@ func (s userService) Get(id uint) (*entity.User, error) {
 	return s.repo.Get(id)
 }
 
+func (s userService) GetByEmail(email string) (*entity.User, error) {
+	return s.repo.GetByEmail(email)
+}
+
 func (s userService) Register(name, surname, patronymic, email string, phone int, password string) (user *entity.User, err error) {
 	return s.repo.Register(name, surname, patronymic, email, phone, password)
 }
@@ -39,7 +44,7 @@ func (s userService) Login(email, password string) (token string, err error) {
 	return s.repo.Login(email, password)
 }
 
-func (s userService) ChangeData(data entity.User) (usr *entity.User, err error) {
+func (s userService) ChangeData(data entity.ChangeUserData) (usr *entity.User, err error) {
 	return s.repo.ChangeData(data)
 }
 

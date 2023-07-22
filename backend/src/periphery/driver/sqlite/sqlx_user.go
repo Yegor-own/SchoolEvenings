@@ -4,7 +4,7 @@ import (
 	"backend/src/domain/entity"
 	"errors"
 	"github.com/jmoiron/sqlx"
-	_ "github.com/mattn/go-sqlite3"
+	//_ "github.com/mattn/go-sqlite3"
 )
 
 // CreateUser uses a pointer for user var and writes in it, if fails return err

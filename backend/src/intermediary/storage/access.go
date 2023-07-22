@@ -10,6 +10,7 @@ type Access interface {
 	DeleteUser(id uint) error
 
 	CreateCourse(course *entity.Course) error
+	FetchAllCourses() ([]entity.Course, error)
 	FetchCourse(id uint) (*entity.Course, error)
 	FetchCourseParams(params map[string]any) (*entity.Course, error)
 	UpdateCourse(id uint, params map[string]any) error
@@ -45,6 +46,10 @@ func (d accessDriver) FetchUser(id uint) (*entity.User, error) {
 
 func (d accessDriver) FetchUserParams(params map[string]any) (*entity.User, error) {
 	return d.storage.FetchUserParams(params)
+}
+
+func (d accessDriver) FetchAllCourses() ([]entity.Course, error) {
+	return d.storage.FetchAllCourses()
 }
 
 func (d accessDriver) UpdateUser(id uint, params map[string]any) error {

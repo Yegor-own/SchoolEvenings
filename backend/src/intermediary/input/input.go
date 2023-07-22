@@ -10,11 +10,9 @@ type UserCreate struct {
 }
 
 type UserUpdate struct {
-	ID         uint   `json:"id" :"id"`
 	Name       string `json:"name" :"name"`
 	Surname    string `json:"surname" :"surname"`
 	Patronymic string `json:"patronymic" :"patronymic"`
-	Email      string `json:"email" :"email"`
 	Phone      int    `json:"phone" :"phone"`
 }
 
@@ -24,4 +22,9 @@ type UserById struct {
 
 type UserDelete struct {
 	ID uint `json:"id" :"id"`
+}
+
+type Login struct {
+	Email    string `json:"email"`
+	Password string `json:"password"`
 }

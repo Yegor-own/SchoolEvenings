@@ -13,9 +13,10 @@ type Course struct {
 	From         time.Time      `json:"from"`
 	To           time.Time      `json:"to"`
 	ExpiresAt    time.Time      `json:"expires_at"`
+	CreatorID    uint           `json:"creator_id"`
 }
 
-func NewCourse(title, description string, ageRange [2]uint, previewUUID string, maxListeners uint, timetable []time.Weekday, from, to, expiresAt time.Time) *Course {
+func NewCourse(title, description string, ageRange [2]uint, previewUUID string, maxListeners uint, timetable []time.Weekday, from, to, expiresAt time.Time, creatorID uint) *Course {
 	return &Course{
 		Title:        title,
 		Description:  description,
@@ -26,6 +27,7 @@ func NewCourse(title, description string, ageRange [2]uint, previewUUID string, 
 		From:         from,
 		To:           to,
 		ExpiresAt:    expiresAt,
+		CreatorID:    creatorID,
 	}
 }
 
