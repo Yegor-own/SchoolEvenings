@@ -16,7 +16,7 @@ type UserUpdate struct {
 	Phone      int    `json:"phone" :"phone"`
 }
 
-type UserById struct {
+type CourseById struct {
 	ID uint `json:"id" :"id"`
 }
 
